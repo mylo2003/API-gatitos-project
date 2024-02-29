@@ -1,6 +1,35 @@
 const API_URL = 'https://api.thecatapi.com/v1';
 const API_KEY = 'api_key=live_g6kgi6v1ZV19U1ITPoERmgi5jc0EXzZs1ByMS7kfZztsqYvT82DckDXrcK32hajd';
 
+const swiper = () =>{ new Swiper(".swiperHome", {
+  slidesPerView: 3,
+  spaceBetween: 30,
+  centeredSlides: true,
+  pagination: {
+    el: ".swiper-pagination",
+    dynamicBullets: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  breakpoints: {
+    640: {
+        slidesPerView: 1,
+        spaceBetween: 20,
+    },
+    768: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+    },
+    1024: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+    },
+  },
+  });
+}
+
 async function loadRamdomCats () {
   try {
     const response = await fetch(`${API_URL}/images/search?limit=5&${API_KEY}`);
@@ -59,40 +88,10 @@ async function loadRamdomCats () {
     img3.src = data[2].url;
     img4.src = data[3].url;
     img5.src = data[4].url;
+
   }catch (error) {
     alert(`Ups... Gatitos ocupados en el error ${error}`);
   }
-}
-
-loadRamdomCats();
-
-const swiper = () =>{ new Swiper(".swiperHome", {
-    slidesPerView: 3,
-    spaceBetween: 30,
-    centeredSlides: true,
-    pagination: {
-      el: ".swiper-pagination",
-      dynamicBullets: true,
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-    breakpoints: {
-      640: {
-          slidesPerView: 1,
-          spaceBetween: 20,
-      },
-      768: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-      },
-      1024: {
-          slidesPerView: 3,
-          spaceBetween: 30,
-      },
-    },
-  });
 }
 
 async function loadFavoritesCats () {
@@ -107,31 +106,31 @@ async function loadFavoritesCats () {
 
     const data = await response.json();
     
-    console.log('favoritos');
-    console.log(data);
-
     if (data.length <= 0) {
       contenedor.innerHTML = `<span class="text-4xl w-full text-center text-white">Upss... Aún no tienes gatitos en favoritos</span>`;
     } else {
       data.forEach((element) => {
         contenedor.innerHTML += `
         <div class="swiper-slide bg-[#f99f9f]/50 rounded-lg w-[300px] h-[300px] relative">
-          <button class="absolute right-0 w-[30px]"><img src="img/corazonlleno.png" alt=""></button>
+          <button value="${element.id}" onclick="" class="absolute right-0 w-[30px]"><img src="img/corazonlleno.png" alt=""></button>
           <img class="size-full rounded-xl" src="${element.image.url}"  alt="">
         </div>
         `;
       });
+      
     }
   }catch (error) {
     alert(`Ups... Gatitos ocupados en el error ${error}`);
   } finally {
+    const favoritos = document.querySelectorAll('.swiper-slide');
+    favoritos.forEach((element) => {
+      element.firstElementChild.onclick = () => deleteFavoriteCat(element.firstElementChild.value);
+    });
     swiper();
   }
 }
 
-loadFavoritesCats();
-
-async function saveFavoriteCat(id) {
+async function saveFavoriteCat (id) {
   try {
     const response = await fetch(`${API_URL}/favourites?${API_KEY}`, {
       method: 'POST',
@@ -149,5 +148,27 @@ async function saveFavoriteCat(id) {
   
   }catch(error) {
     alert(`Ups... Gatitos ocupados en el error ${error}`);
+  } finally {
+    loadFavoritesCats();
   }
 }
+
+async function deleteFavoriteCat(id) {
+  try {
+    const response = await fetch(`${API_URL}/favourites/${id}?${API_KEY}`, {
+      method: 'DELETE',
+    });
+
+    const status = response.status;
+    
+    if(status !== 200) throw Error(`Gatitos borrados: ${status}`);
+
+  }catch(error) {
+    alert(`Ups... Gatitos ocupados en el error ${error}`);
+  } finally {
+    loadFavoritesCats();
+  }
+}
+
+loadRamdomCats();
+loadFavoritesCats();
