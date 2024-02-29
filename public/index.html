@@ -8,6 +8,7 @@
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Ysabeau+Infant:ital,wght@0,1..1000;1,1..1000&display=swap" rel="stylesheet">
       <link rel="icon" href="./img/favicon1.png">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
       <link rel="stylesheet" href="./css/index.css">
       <title>Gatitos Aleatorios</title>
   </head>
@@ -22,92 +23,73 @@
           </nav>
         </div>
       </header>
-      <main class="max-w-6xl h-[80vh] mx-auto mt-10 py-10">
-        <section class="h-[90vh]">
+      <main class="max-w-6xl h-[90vh] mx-auto">
+        <section class="mt-10 h-[90vh] lg:mt-20">
           <h1  class="text-center text-[#d24a4a] font-bold text-4xl w-full mb-10">Gatitos Aleatorios</h1>
           <div class="w-[350px] h-[400px] backdrop-blur-sm bg-[#d24a4a]/50  mx-auto px-5 py-5 rounded-xl grid grid-rows-1 grid-cols-1 gap-2 md:w-[700px] md:h-[450px] md:grid-cols-3 md:grid-rows-2 md:max-w-4xl lg:h-[450px] lg:w-full lg:grid-rows-2 lg:grid-cols-5">
             <div class="bg-[#f99f9f]/50 rounded-lg mx-auto w-[300px] h-[300px] md:w-full md:h-full lg:w-full relative">
-              <img class="absolute right-0 w-[35px]" src="img/corazonvacio.png" alt="">
+              <button id="btn1" class="absolute right-0 w-[30px]"><img src="img/corazonvacio.png" alt=""></button>
               <img class="size-full rounded-xl"  alt="" id="img1">
             </div>
             <div class="bg-[#f99f9f]/50 hidden rounded-lg md:block md:w-full md:row-start-2 md:col-start-1 lg:w-full lg:row-start-2 relative">
-              <img class="absolute right-0 w-[35px]" src="img/corazonvacio.png" alt="">
+              <button id="btn2" class="absolute right-0 w-[30px]"><img src="img/corazonvacio.png" alt=""></button>
               <img class="size-full rounded-xl"  alt="" id="img2">
             </div>
             <div class="bg-[#f99f9f]/50 hidden rounded-lg md:block md:w-full md:col-span-2 md:row-span-2 lg:row-start-1 lg:col-start-2 lg:row-span-1 lg:col-span-2 lg:w-full relative">
-              <img class="absolute right-0 w-[35px]" src="img/corazonvacio.png" alt="">
+              <button id="btn3" class="absolute right-0 w-[30px]"><img src="img/corazonvacio.png" alt=""></button>
               <img class="size-full rounded-xl"  alt="" id="img3">
             </div>
             <div class="bg-[#f99f9f]/50 hidden rounded-lg lg:block lg:col-start-4 lg:col-span-2 lg:row-span-2 lg:w-full relative">
-              <img class="absolute right-0 w-[35px]" src="img/corazonvacio.png" alt="">
+              <button id="btn4" class="absolute right-0 w-[30px]"><img src="img/corazonvacio.png" alt=""></button>
               <img class="size-full rounded-xl"  alt="" id="img4">
             </div>
             <div class="bg-[#f99f9f]/50 hidden rounded-lg lg:block lg:col-start-2 lg:row-start-2 lg:col-span-2 lg:w-full relative">
-              <img class="absolute right-0 w-[35px]" src="img/corazonvacio.png" alt="">
+              <button id="btn5" class="absolute right-0 w-[30px]"><img src="img/corazonvacio.png" alt=""></button>
               <img class="size-full rounded-xl"  alt="" id="img5">
             </div>
           </div>
-          <div class="w-40 mx-auto pt-5 transition-all duration-300 ease-in-out hover:scale-95 ">
-            <button onclick="loadRamdomCats();" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibold hover:border-b-2">Nuevos gatitos</button>
+          <div class="w-40 mx-auto pt-5 transition-all duration-300 ease-in-out hover:scale-95">
+            <button onclick="loadRamdomCats();" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibol">Nuevos gatitos</button>
+          </div>
+        </section>
+        <div id="favoritos"></div>
+        <section class="mt-10 h-[90vh] lg:mt-20">
+          <h2 class="text-center text-[#d24a4a] font-bold text-4xl w-full mb-10">Gatitos Favoritos</h2>
+          <div class="swiper swiperHome w-[350px] h-[400px] backdrop-blur-sm bg-[#d24a4a]/50 items-center mx-auto px-5 py-5 rounded-xl md:w-[700px] md:h-[450px] md:max-w-4xl lg:h-[450px] lg:w-full">
+            <div id="contenedor-fav" class="swiper-wrapper flex items-center"></div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
+          <div class="w-48 mx-auto pt-5 transition-all duration-300 ease-in-out hover:scale-95">
+            <button onclick="loadFavoritesCats()" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibold">Cargar Favoritos</button>
           </div>
         </section>
 
-        <section id="favoritos" class="mt-5 h-[90vh]">
-          <h2  class="text-center text-[#d24a4a] font-bold text-4xl w-full mb-10">Gatitos Favoritos</h2>
-          <div class="w-[350px] h-[400px] backdrop-blur-sm bg-[#d24a4a]/50  mx-auto px-5 py-5 rounded-xl grid grid-rows-1 grid-cols-1 gap-2 md:w-[700px] md:h-[450px] md:grid-cols-3 md:grid-rows-2 md:max-w-4xl lg:h-[450px] lg:w-full lg:grid-rows-2 lg:grid-cols-3">
-            <div class="bg-[#f99f9f]/50 rounded-lg mx-auto w-full h-full relative">
-              <img class="absolute right-0 w-[40px]" src="img/corazonlleno.png" alt="">
-              <img class="size-full rounded-xl"  alt="" id="imgfav1">
-            </div>
-            <div class="hidden md:block bg-[#f99f9f]/50 rounded-lg mx-auto w-full h-full relative">
-              <img class="absolute right-0 w-[40px]" src="img/corazonlleno.png" alt="">
-              <img class="size-full rounded-xl"   alt="" id="imgfav2">
-            </div>
-            <div class="hidden md:block bg-[#f99f9f]/50 rounded-lg mx-auto w-full h-full relative">
-              <img class="absolute right-0 w-[40px]" src="img/corazonlleno.png" alt="">
-              <img class="size-full rounded-xl"  alt="" id="imgfav3">
-            </div>
-            <div class="hidden md:block bg-[#f99f9f]/50 rounded-lg mx-auto w-full h-full relative">
-              <img class="absolute right-0 w-[40px]" src="img/corazonlleno.png" alt="">
-              <img class="size-full rounded-xl"  alt="" id="imgfav4">
-            </div>
-            <div class="hidden md:block bg-[#f99f9f]/50 rounded-lg mx-auto w-full h-full relative">
-              <img class="absolute right-0 w-[40px]" src="img/corazonlleno.png" alt="">
-              <img class="size-full rounded-xl"  alt="" id="imgfav5">
-            </div>
-            <div class="hidden md:block bg-[#f99f9f]/50 rounded-lg mx-auto w-full h-full relative">
-              <img class="absolute right-0 w-[40px]" src="img/corazonlleno.png" alt="">
-              <img class="size-full rounded-xl"  alt="" id="imgfav6">
-            </div>
-          </div>
-          <div class="w-48 mx-auto pt-5 transition-all duration-300 ease-in-out hover:scale-95 ">
-            <button onclick="" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibold hover:border-b-2">Gatitos Favoritos</button>
-          </div>
-        </section>
-
-        <section id="agregar" class="mt-5 h-[90vh]">
+        <section id="agregar" class="mt-10 h-[90vh] lg:mt-20">
           <h2  class="text-center text-[#d24a4a] font-bold text-4xl w-full mb-10">Sube Gatitos</h2>
           <div class="w-[350px] h-[400px] backdrop-blur-sm bg-[#d24a4a]/50  mx-auto px-5 py-5 rounded-xl grid grid-rows-1 grid-cols-1 gap-2 max-w-4xl md:w-[700px] md:h-[450px] lg:h-[450px] lg:w-full">
  
           </div>
-          <div class="w-40 mx-auto pt-5 transition-all duration-300 ease-in-out hover:scale-95 ">
-            <button onclick="" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibold hover:border-b-2">Subir Gatito</button>
+          <div class="w-40 mx-auto pt-5 transition-all duration-300 ease-in-out hover:scale-95">
+            <button onclick="" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibold">Subir Gatito</button>
           </div>
         </section>
       </main>
-      <footer class="w-full h-20 fixed bottom-0 bg-[#d24a4a] lg:h-12">
+      <footer class="z-50 w-full h-20 fixed bottom-0 lg:h-12 shadow-xl backdrop-blur-sm bg-[#d24a4a]/50">
         <div class="hidden lg:flex justify-center items-center">
           <h4 class="block mt-2 font-semibold mr-2">Hecho por Camilo Mora</h4>
           <a class="block mt-2" href="https://github.com/mylo2003/API-gatitos-project" target="_blank"><img class="w-[20px] h-[20px]" src="./img/github.png" alt=""></a>
         </div>  
         <div class="lg:hidden">
           <nav class="w-full h-20 flex justify-evenly list-none items-center">
-            <li><a href=""></a>Icon</li>
-            <li><a href=""></a>Icon</li>
-            <li><a href=""></a>Icon</li>
+            <li><a href="#"><img class="w-[35px]" src="img/favicon1.png" alt=""></a></li>
+            <li><a href="#favoritos"><img class="w-[35px]" src="img/corazonblanco.png" alt=""></a></li>
+            <li><a href="#agregar"><img class="w-[35px]" src="img/agregar.png" alt=""></a></li>
           </nav>
         </div>
       </footer>
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
       <script src="./js/main.js"></script>
   </body>
 </html>
