@@ -1,9 +1,8 @@
 const API_URL = 'https://api.thecatapi.com/v1';
-const API_KEY = 'api_key=live_g6kgi6v1ZV19U1ITPoERmgi5jc0EXzZs1ByMS7kfZztsqYvT82DckDXrcK32hajd';
+const API_KEY = 'live_g6kgi6v1ZV19U1ITPoERmgi5jc0EXzZs1ByMS7kfZztsqYvT82DckDXrcK32hajd';
 
 const swiper = () =>{ new Swiper(".swiperHome", {
-  slidesPerView: 3,
-  spaceBetween: 30,
+  spaceBetween: 20,
   centeredSlides: true,
   pagination: {
     el: ".swiper-pagination",
@@ -32,7 +31,7 @@ const swiper = () =>{ new Swiper(".swiperHome", {
 
 async function loadRamdomCats () {
   try {
-    const response = await fetch(`${API_URL}/images/search?limit=5&${API_KEY}`);
+    const response = await fetch(`${API_URL}/images/search?limit=5`);
     const status = response.status;
 
     if(status !== 200) throw Error(`Gatitos Random: ${status}`);
@@ -97,7 +96,13 @@ async function loadRamdomCats () {
 async function loadFavoritesCats () {
   try{
     const contenedor = document.querySelector('#contenedor-fav');
-    const response = await fetch(`${API_URL}/favourites?order=DESC&${API_KEY}`);
+    const response = await fetch(`${API_URL}/favourites?order=DESC&`, {
+      method: 'GET',
+      headers: {
+        'x-api-key': API_KEY,
+      },
+    });
+
     const status = response.status;
     
     contenedor.innerHTML = '';
@@ -132,10 +137,11 @@ async function loadFavoritesCats () {
 
 async function saveFavoriteCat (id) {
   try {
-    const response = await fetch(`${API_URL}/favourites?${API_KEY}`, {
+    const response = await fetch(`${API_URL}/favourites`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'x-api-key': API_KEY,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         image_id: id
@@ -153,10 +159,13 @@ async function saveFavoriteCat (id) {
   }
 }
 
-async function deleteFavoriteCat(id) {
+async function deleteFavoriteCat (id) {
   try {
-    const response = await fetch(`${API_URL}/favourites/${id}?${API_KEY}`, {
+    const response = await fetch(`${API_URL}/favourites/${id}`, {
       method: 'DELETE',
+      headers: {
+        'x-api-key': API_KEY,
+      },
     });
 
     const status = response.status;
@@ -167,6 +176,61 @@ async function deleteFavoriteCat(id) {
     alert(`Ups... Gatitos ocupados en el error ${error}`);
   } finally {
     loadFavoritesCats();
+  }
+}
+
+async function uploadCatPhoto () {
+  const form = document.getElementById('uploadingForm');
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch(`${API_URL}/images/upload`, {
+      method: 'POST',
+      headers: {
+        'x-api-key': API_KEY,
+      },
+      body: formData,
+    });
+
+    const status = response.status;
+
+    if(status !== 201) throw Error(`Gatitos subidos: ${status}`);
+
+    const data = await response.json();
+
+    saveFavoriteCat(data.id);
+
+    const preview = document.getElementById("preview-container");
+  
+    if(preview.hasChildNodes()){
+      const mini = document.getElementById("mini");
+      preview.removeChild(mini);
+    }
+
+  }catch (error){
+    alert(`Ups... Gatitos ocupados en el error ${error}`);
+  }
+}
+
+function miniatura() {
+  const form = document.getElementById('uploadingForm');
+  const formData = new FormData(form);
+  const preview = document.getElementById("preview-container");
+  const reader = new FileReader();
+
+  reader.readAsDataURL(formData.get('file'));
+
+  if(preview.hasChildNodes()){
+    const mini = document.getElementById("mini");
+    preview.removeChild(mini);
+  }
+
+  reader.onload = () => {
+    const previewImage = document.createElement('img');
+    previewImage.id = 'mini';
+    previewImage.width = 150;
+    previewImage.src = reader.result;
+    preview.appendChild(previewImage);
   }
 }
 

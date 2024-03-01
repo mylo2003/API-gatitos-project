@@ -131,7 +131,6 @@ dist
 
 
 src/css/
-img/
 
 package-lock.json
 package.json

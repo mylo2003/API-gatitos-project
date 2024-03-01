@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="es" class="scroll-smooth">
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,22 +57,26 @@
           <h2 class="text-center text-[#d24a4a] font-bold text-4xl w-full mb-10">Gatitos Favoritos</h2>
           <div class="swiper swiperHome w-[350px] h-[400px] backdrop-blur-sm bg-[#d24a4a]/50 items-center mx-auto px-5 py-5 rounded-xl md:w-[700px] md:h-[450px] md:max-w-4xl lg:h-[450px] lg:w-full">
             <div id="contenedor-fav" class="swiper-wrapper flex items-center"></div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination" style="--swiper-pagination-color:#d24a4a"></div>
+            <div class="swiper-button-next text-[#d24a4a]"></div>
+            <div class="swiper-button-prev text-[#d24a4a]"></div>
           </div>
           <div class="w-48 mx-auto pt-5 transition-all duration-300 ease-in-out hover:scale-95">
-            <button onclick="loadFavoritesCats()" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibold">Cargar Favoritos</button>
+            <button onclick="loadFavoritesCats()" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibold">Recargar Favoritos</button>
           </div>
         </section>
 
         <section id="agregar" class="mt-10 h-[90vh] lg:mt-20">
           <h2  class="text-center text-[#d24a4a] font-bold text-4xl w-full mb-10">Sube Gatitos</h2>
-          <div class="w-[350px] h-[400px] backdrop-blur-sm bg-[#d24a4a]/50  mx-auto px-5 py-5 rounded-xl grid grid-rows-1 grid-cols-1 gap-2 max-w-4xl md:w-[700px] md:h-[450px] lg:h-[450px] lg:w-full">
- 
+          <div class="w-[350px] h-[400px] backdrop-blur-sm bg-[#d24a4a]/50 flex flex-col items-center mx-auto px-5 py-5 rounded-xl max-w-4xl md:w-[700px] md:h-[450px] lg:h-[450px] lg:w-full">
+            <h4 class="text-white font-semibold text-xl mb-10">Selecciona un gatito para subir</h4>
+            <form class="flex flex-col items-center" id="uploadingForm">
+              <div id="preview-container" class="w-28 h-28 mb-10"></div>
+              <input class="bg-red-400 text-white hover:cursor-pointer mb-10 w-[200px]"  id="file" type="file" name="file" onchange="miniatura()">
+              <button type="button" onclick="uploadCatPhoto()" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibold transition-all duration-300 ease-in-out hover:scale-95 ">Subir Gatito</button>
+            </form>
           </div>
           <div class="w-40 mx-auto pt-5 transition-all duration-300 ease-in-out hover:scale-95">
-            <button onclick="" class="text-xl text-white bg-red-400 py-2 px-3 rounded-md font-semibold">Subir Gatito</button>
           </div>
         </section>
       </main>
